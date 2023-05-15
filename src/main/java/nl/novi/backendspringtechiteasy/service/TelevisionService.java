@@ -19,7 +19,7 @@ public class TelevisionService {
         this.repos = repos;
     }
 
-    private List<TelevisionDto> getTelevisions() {
+    public List<TelevisionDto> getTelevisions() {
         Iterable<Television> televisions = repos.findAll();
         List<TelevisionDto> televisionDtos = new ArrayList<>();
         for (Television t : televisions) {
@@ -30,12 +30,27 @@ public class TelevisionService {
         return televisionDtos;
     }
 
-    private TelevisionDto getTelevision(Long id) {
+    public TelevisionDto getTelevision(Long id) {
         Optional<Television> t = repos.findById(id);
         TelevisionDto televisionDto = new TelevisionDto();
         BeanUtils.copyProperties(t, televisionDto);
         return televisionDto;
     }
 
-    private
+    public Long saveTelevision(TelevisionDto televisionDto) {
+        Television television = new Television();
+        BeanUtils.copyProperties(television, televisionDto);
+        repos.save(television);
+        return television.getId();
+    }
+
+    public Long updateTelevision(Long id, TelevisionDto televisionDto) {
+        Optional<Television> television = repos.findById(id);
+        if (television != null) {
+            BeanUtils.copyProperties(television, televisionDto);
+            repos.save(television);
+        }
+
+        return television.get().getId();
+    }
 }
