@@ -4,6 +4,7 @@ import nl.novi.backendspringtechiteasy.model.Television;
 import org.springframework.beans.BeanUtils;
 
 public class TelevisionDto {
+
     public Long id;
     public String brand;
     public String name;

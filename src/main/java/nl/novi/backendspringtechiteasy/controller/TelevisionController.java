@@ -31,27 +31,17 @@ public class TelevisionController {
         return ResponseEntity.ok(service.getTelevisions());
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Optional<Television>> getTelevision(@PathVariable Long id) {
-//        if (id >= 0 && id < repos.count()) {
-//            return ResponseEntity.ok(repos.findById(id));
-//        } else {
-//            throw new RecordNotFoundException("ID cannot be found");
-//        }
-//    }
-
-//    @PostMapping
-//    public ResponseEntity<Television> addTelevision(@RequestBody Television television) {
-//        repos.save(television);
-//        return ResponseEntity.ok(television);
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<TelevisionDto> getTelevision(@Valid @PathVariable Long id) {
+        return ResponseEntity.ok(service.getTelevision(id));
+    }
 
     @PostMapping
     public ResponseEntity<Object> addTelevision(@Valid @RequestBody TelevisionDto televisionDto, BindingResult br) {
         if (br.hasFieldErrors()) {
             StringBuilder sb = new StringBuilder();
             for (FieldError fe : br.getFieldErrors()) {
-                sb.append(fe.getField() + ": ");
+                sb.append(fe.getField()).append(": ");
                 sb.append(fe.getDefaultMessage());
                 sb.append("\n");
             }
@@ -65,26 +55,22 @@ public class TelevisionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Television> updateTelevision(@PathVariable Long id, @RequestBody TelevisionDto televisionDto) {
-
-
-//        if (id >= 0 && id < repos.count()) {
-//            repos.save(t);
-//            return ResponseEntity.ok(t);
-//        } else if (id >= repos.count()) {
-//            throw new IndexOutOfBoundsException("ID out of bounds");
-//        } else {
-//            throw new RecordNotFoundException("ID cannot be found");
-//        }
+    public ResponseEntity<Object> updateTelevision(@PathVariable Long id,@Valid @RequestBody TelevisionDto televisionDto, BindingResult br) {
+        if (br.hasFieldErrors()) {
+            StringBuilder sb = new StringBuilder();
+            for (FieldError fe : br.getFieldErrors()) {
+                sb.append(fe.getField()).append(": ").append(fe.getDefaultMessage()).append("\n");
+            }
+            return ResponseEntity.badRequest().body(sb.toString());
+        } else {
+            service.updateTelevision(id, televisionDto);
+            return ResponseEntity.ok().body("Television was updated");
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTelevision(@PathVariable Long id) {
-        if (id >= 0 && id < repos.count()) {
-            repos.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            throw new RecordNotFoundException("ID cannot be found");
-        }
+        service.deleteTelevision(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -1,12 +1,16 @@
 package nl.novi.backendspringtechiteasy.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import nl.novi.backendspringtechiteasy.model.Television;
 import org.springframework.beans.BeanUtils;
 
 public class TelevisionInputDto {
     public Long id;
+    @NotBlank
     public String brand;
+    @NotBlank
     public String name;
+    @NotBlank
     public Double price;
     public Double availableSize;
     public Double refreshRate;
