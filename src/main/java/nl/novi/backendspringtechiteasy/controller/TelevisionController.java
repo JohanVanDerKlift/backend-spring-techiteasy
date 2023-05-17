@@ -2,11 +2,7 @@ package nl.novi.backendspringtechiteasy.controller;
 
 import jakarta.validation.Valid;
 import nl.novi.backendspringtechiteasy.dto.TelevisionDto;
-import nl.novi.backendspringtechiteasy.exception.RecordNotFoundException;
-import nl.novi.backendspringtechiteasy.model.Television;
-import nl.novi.backendspringtechiteasy.repository.TelevisionRepository;
 import nl.novi.backendspringtechiteasy.service.TelevisionService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -14,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("televisions")
