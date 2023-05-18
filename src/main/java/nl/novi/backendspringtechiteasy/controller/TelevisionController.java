@@ -12,23 +12,23 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("televisions")
+@RequestMapping("/televisions")
 public class TelevisionController {
 
-    private final TelevisionService service;
+    private final TelevisionService televisionService;
 
     public TelevisionController(TelevisionService service) {
-        this.service = service;
+        this.televisionService = service;
     }
 
     @GetMapping
     public ResponseEntity<Iterable<TelevisionDto>> getTelevisions() {
-        return ResponseEntity.ok(service.getTelevisions());
+        return ResponseEntity.ok(televisionService.getTelevisions());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TelevisionDto> getTelevision(@Valid @PathVariable Long id) {
-        return ResponseEntity.ok(service.getTelevision(id));
+        return ResponseEntity.ok(televisionService.getTelevision(id));
     }
 
     @PostMapping
@@ -42,7 +42,7 @@ public class TelevisionController {
             }
             return ResponseEntity.badRequest().body(sb.toString());
         } else {
-            Long newId = service.saveTelevision(televisionDto);
+            Long newId = televisionService.saveTelevision(televisionDto);
             URI uri = URI.create(ServletUriComponentsBuilder
                     .fromCurrentRequest().path("/" + newId).toUriString());
             return ResponseEntity.created(uri).body(newId);
@@ -58,14 +58,14 @@ public class TelevisionController {
             }
             return ResponseEntity.badRequest().body(sb.toString());
         } else {
-            service.updateTelevision(id, televisionDto);
+            televisionService.updateTelevision(id, televisionDto);
             return ResponseEntity.ok().body("Television was updated");
         }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTelevision(@PathVariable Long id) {
-        service.deleteTelevision(id);
+        televisionService.deleteTelevision(id);
         return ResponseEntity.noContent().build();
     }
 }

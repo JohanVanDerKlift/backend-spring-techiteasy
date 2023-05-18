@@ -19,13 +19,7 @@ public class RemoteControllerService {
 
     public Long createRemoteController(RemoteControllerDto remoteControllerDto) {
         RemoteController remoteController = new RemoteController();
-        remoteController.setBatteryType(remoteControllerDto.batteryType);
-        remoteController.setBrand(remoteControllerDto.brand);
-        remoteController.setName(remoteControllerDto.name);
-        remoteController.setCompatibleWith(remoteControllerDto.compatibleWith);
-        remoteController.setPrice(remoteControllerDto.price);
-        remoteController.setOriginalStock(remoteControllerDto.originalStock);
-        remoteControllerRepos.save(remoteController);
+        remoteControllerRepos.save(transferRemoteControllerDtoToRemoteController(remoteControllerDto, remoteController));
         return remoteController.getId();
     }
 
@@ -44,6 +38,17 @@ public class RemoteControllerService {
         return transferRemoteControllerToRemoteControllerDto(remoteController);
     }
 
+    public void updateRemoteController(RemoteControllerDto remoteControllerDto, Long id) {
+        RemoteController remoteController = remoteControllerRepos.findById(id).orElseThrow(() -> new RecordNotFoundException("Remote controller was not found in the database"));
+        if (remoteController != null) {            ;
+            remoteControllerRepos.save(transferRemoteControllerDtoToRemoteController(remoteControllerDto, remoteController));
+        }
+    }
+
+    public void deleteRemoteController(Long id) {
+        remoteControllerRepos.deleteById(id);
+    }
+
     private RemoteControllerDto transferRemoteControllerToRemoteControllerDto(RemoteController r) {
         RemoteControllerDto remoteControllerDto = new RemoteControllerDto();
         remoteControllerDto.batteryType = r.getBatteryType();
@@ -54,5 +59,15 @@ public class RemoteControllerService {
         remoteControllerDto.originalStock = r.getOriginalStock();
         remoteControllerDto.price = r.getPrice();
         return remoteControllerDto;
+    }
+
+    private RemoteController transferRemoteControllerDtoToRemoteController(RemoteControllerDto remoteControllerDto, RemoteController r) {
+        r.setBatteryType(remoteControllerDto.batteryType);
+        r.setBrand(remoteControllerDto.brand);
+        r.setName(remoteControllerDto.name);
+        r.setCompatibleWith(remoteControllerDto.compatibleWith);
+        r.setPrice(remoteControllerDto.price);
+        r.setOriginalStock(remoteControllerDto.originalStock);
+        return r;
     }
 }

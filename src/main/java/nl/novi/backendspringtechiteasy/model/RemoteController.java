@@ -16,6 +16,19 @@ public class RemoteController {
     private Double price;
     private Integer originalStock;
 
+    public RemoteController() {
+    }
+
+    public RemoteController(Long id, String compatibleWith, String batteryType, String name, String brand, Double price, Integer originalStock) {
+        this.id = id;
+        this.compatibleWith = compatibleWith;
+        this.batteryType = batteryType;
+        this.name = name;
+        this.brand = brand;
+        this.price = price;
+        this.originalStock = originalStock;
+    }
+
     public Long getId() {
         return id;
     }

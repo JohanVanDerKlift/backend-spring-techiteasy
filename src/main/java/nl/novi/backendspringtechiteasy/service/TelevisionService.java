@@ -34,9 +34,8 @@ public class TelevisionService {
     }
 
     public Long saveTelevision(TelevisionDto televisionDto) {
-        Television t = new Television();
-        Television television = transferTelevisionDtoToTelevision(t, televisionDto);
-        televisionRepository.save(television);
+        Television television = new Television();
+        televisionRepository.save(transferTelevisionDtoToTelevision(television, televisionDto));
         return television.getId();
     }
 
