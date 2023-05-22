@@ -32,7 +32,26 @@ public class CIModuleController {
         return ResponseEntity.ok(ciModuleService.getAllCIModules());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<CIModuleDto> getCIModule(@PathVariable Long id) {
+        return ResponseEntity.ok(ciModuleService.getCIModule(id));
+    }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateCIModule(@PathVariable Long id, @RequestBody CIModuleDto ciModuleDto, BindingResult br) {
+        if (br.hasFieldErrors()) {
+            return ResponseEntity.badRequest().body(getBindingResult(br));
+        } else {
+            ciModuleService.updateCIModule(ciModuleDto, id);
+            return ResponseEntity.ok("CI Module was updated");
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCIModule(@PathVariable Long id) {
+        ciModuleService.deleteCIModule(id);
+        return ResponseEntity.noContent().build();
+    }
 
     private String getBindingResult(BindingResult br) {
         StringBuilder sb = new StringBuilder();

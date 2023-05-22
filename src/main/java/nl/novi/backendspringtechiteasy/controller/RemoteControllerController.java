@@ -43,7 +43,7 @@ public class RemoteControllerController {
             return ResponseEntity.badRequest().body(getBindingResult(br));
         } else {
             remoteControllerService.updateRemoteController(remoteControllerDto, id);
-            return  ResponseEntity.ok("Remote controller was updated");
+            return ResponseEntity.ok("Remote controller was updated");
         }
     }
 

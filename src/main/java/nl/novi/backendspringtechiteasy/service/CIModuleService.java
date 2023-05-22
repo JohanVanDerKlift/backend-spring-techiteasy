@@ -1,6 +1,7 @@
 package nl.novi.backendspringtechiteasy.service;
 
 import nl.novi.backendspringtechiteasy.dto.CIModuleDto;
+import nl.novi.backendspringtechiteasy.exception.RecordNotFoundException;
 import nl.novi.backendspringtechiteasy.model.CIModule;
 import nl.novi.backendspringtechiteasy.repository.CIModuleRepository;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,21 @@ public class CIModuleService {
         return ciModuleDtos;
     }
 
+    public CIModuleDto getCIModule(Long id) {
+        CIModule ciModule = ciModuleRepos.findById(id).orElseThrow(() -> new RecordNotFoundException("CI Module was not found in the database"));
+        return transferCIModuleToCIModuleDto(ciModule);
+    }
 
+    public void updateCIModule(CIModuleDto ciModuleDto, Long id) {
+        CIModule ciModule = ciModuleRepos.findById(id).orElseThrow(() -> new RecordNotFoundException("CI Module was not found in the database"));
+        if (ciModule != null) {
+            ciModuleRepos.save(transferCIModuleDtoToCIModule(ciModuleDto, ciModule));
+        }
+    }
+
+    public void deleteCIModule(Long id) {
+        ciModuleRepos.deleteById(id);
+    }
 
     private CIModuleDto transferCIModuleToCIModuleDto(CIModule ciModule) {
         CIModuleDto ciModuleDto = new CIModuleDto();
