@@ -1,7 +1,12 @@
 package nl.novi.backendspringtechiteasy.dto;
 
+import nl.novi.backendspringtechiteasy.model.CIModule;
+import nl.novi.backendspringtechiteasy.model.RemoteController;
 import nl.novi.backendspringtechiteasy.model.Television;
+import nl.novi.backendspringtechiteasy.model.WallBracket;
 import org.springframework.beans.BeanUtils;
+
+import java.util.List;
 
 public class TelevisionDto {
 
@@ -21,6 +26,9 @@ public class TelevisionDto {
     public Boolean ambiLight;
     public Integer originalStock;
     public Integer sold;
+    public RemoteController remoteController;
+    public CIModule ciModule;
+//    public List<WallBracket> wallBrackets;
 
     public static TelevisionDto fromTelevision(Television television) {
         TelevisionDto dto = new TelevisionDto();

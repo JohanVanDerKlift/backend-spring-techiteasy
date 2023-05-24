@@ -3,6 +3,9 @@ package nl.novi.backendspringtechiteasy.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+
+import java.util.List;
 
 @Entity
 public class WallBracket {
@@ -13,6 +16,8 @@ public class WallBracket {
     private boolean adjustable;
     private String name;
     private Double price;
+    @ManyToMany(mappedBy = "wallBrackets")
+    private List<Television> televisions;
 
     public Long getId() {
         return id;

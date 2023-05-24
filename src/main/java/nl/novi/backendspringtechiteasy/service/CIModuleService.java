@@ -3,10 +3,12 @@ package nl.novi.backendspringtechiteasy.service;
 import nl.novi.backendspringtechiteasy.dto.CIModuleDto;
 import nl.novi.backendspringtechiteasy.exception.RecordNotFoundException;
 import nl.novi.backendspringtechiteasy.model.CIModule;
+import nl.novi.backendspringtechiteasy.model.Television;
 import nl.novi.backendspringtechiteasy.repository.CIModuleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CIModuleService {
@@ -53,6 +55,11 @@ public class CIModuleService {
         ciModuleDto.name = ciModule.getName();
         ciModuleDto.type = ciModule.getType();
         ciModuleDto.price = ciModule.getPrice();
+        List<Television> televisions = new ArrayList<>();
+        for (Television t : ciModule.getTelevisions()) {
+            televisions.add(t);
+        }
+        ciModuleDto.televisions = televisions;
         return ciModuleDto;
     }
 

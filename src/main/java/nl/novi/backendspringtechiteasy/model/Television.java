@@ -1,9 +1,8 @@
 package nl.novi.backendspringtechiteasy.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "televisions")
@@ -28,10 +27,19 @@ public class Television {
     private Integer originalStock;
     private Integer sold;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    RemoteController remoteController;
+    @ManyToOne
+    private CIModule ciModule;
+
+    @ManyToMany
+    private List<WallBracket> wallBrackets;
+
     public Television() {
     }
 
-    public Television(Long id, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
+    public Television(Long id, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality,
+                      Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold, RemoteController remoteController) {
         this.id = id;
         this.brand = brand;
         this.name = name;
@@ -48,6 +56,7 @@ public class Television {
         this.ambiLight = ambiLight;
         this.originalStock = originalStock;
         this.sold = sold;
+        this.remoteController = remoteController;
     }
 
     public Long getId() {
@@ -176,5 +185,21 @@ public class Television {
 
     public void setSold(Integer sold) {
         this.sold = sold;
+    }
+
+    public RemoteController getRemoteController() {
+        return remoteController;
+    }
+
+    public void setRemoteController(RemoteController remoteController) {
+        this.remoteController = remoteController;
+    }
+
+    public CIModule getCiModule() {
+        return ciModule;
+    }
+
+    public void setCiModule(CIModule ciModule) {
+        this.ciModule = ciModule;
     }
 }

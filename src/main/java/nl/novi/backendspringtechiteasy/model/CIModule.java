@@ -1,8 +1,9 @@
 package nl.novi.backendspringtechiteasy.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class CIModule {
@@ -12,15 +13,19 @@ public class CIModule {
     private String name;
     private String type;
     private Double price;
+    @OneToMany(mappedBy = "ciModule")
+    @JsonIgnore
+    private List<Television> televisions;
 
     public CIModule() {
     }
 
-    public CIModule(Long id, String name, String type, Double price) {
+    public CIModule(Long id, String name, String type, Double price, List<Television> televisions) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.price = price;
+        this.televisions = televisions;
     }
 
     public Long getId() {
@@ -53,5 +58,13 @@ public class CIModule {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public List<Television> getTelevisions() {
+        return televisions;
+    }
+
+    public void setTelevisions(List<Television> televisions) {
+        this.televisions = televisions;
     }
 }

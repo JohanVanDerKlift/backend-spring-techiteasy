@@ -1,6 +1,5 @@
 package nl.novi.backendspringtechiteasy.service;
 
-import nl.novi.backendspringtechiteasy.dto.TelevisionDto;
 import nl.novi.backendspringtechiteasy.dto.WallBracketDto;
 import nl.novi.backendspringtechiteasy.exception.RecordNotFoundException;
 import nl.novi.backendspringtechiteasy.model.WallBracket;

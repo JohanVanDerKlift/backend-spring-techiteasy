@@ -2,20 +2,52 @@ package nl.novi.backendspringtechiteasy.service;
 
 import nl.novi.backendspringtechiteasy.dto.TelevisionDto;
 import nl.novi.backendspringtechiteasy.exception.RecordNotFoundException;
+import nl.novi.backendspringtechiteasy.model.RemoteController;
 import nl.novi.backendspringtechiteasy.model.Television;
+import nl.novi.backendspringtechiteasy.repository.RemoteControllerRepository;
 import nl.novi.backendspringtechiteasy.repository.TelevisionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TelevisionService {
 
     private final TelevisionRepository televisionRepository;
+    private final RemoteControllerRepository remoteControllerRepository;
 
-    public TelevisionService(TelevisionRepository televisionRepository) {
+    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository) {
         this.televisionRepository = televisionRepository;
+        this.remoteControllerRepository = remoteControllerRepository;
+    }
+
+//    public TelevisionDto assignRemoteControllerToTelevision(Long id, Long remoteControllerId) throws RecordNotFoundException {
+//        Optional<Television> optionalTelevision= televisionRepository.findById(id);
+//        Optional<RemoteController> optionalRemoteController = remoteControllerRepository.findById(remoteControllerId);
+//        if (optionalTelevision.isPresent() && optionalRemoteController.isPresent()) {
+//            Television television = optionalTelevision.get();
+//            RemoteController remoteController = optionalRemoteController.get();
+//            television.setRemoteController(remoteController);
+//            Television updatedTelevision = televisionRepository.save(television);
+//            return transferTelevisionToTelevisionDto(updatedTelevision);
+//        } else {
+//            throw new RecordNotFoundException("Record not found");
+//        }
+//    }
+
+    public TelevisionDto assignRemoteControllerToTelevision(Long televisionId, Long remoteControllerId) {
+        Optional<Television> optionalTelevision = televisionRepository.findById(televisionId);
+        Optional<RemoteController> optionalRemoteController = remoteControllerRepository.findById(remoteControllerId);
+        if (optionalTelevision.isEmpty() && optionalRemoteController.isEmpty()) {
+            throw new RecordNotFoundException("Records not found");
+        }
+        Television television = optionalTelevision.get();
+        RemoteController remoteController = optionalRemoteController.get();
+        television.setRemoteController(remoteController);
+        televisionRepository.save(television);
+        return transferTelevisionToTelevisionDto(television);
     }
 
     public List<TelevisionDto> getTelevisions() {
@@ -68,6 +100,8 @@ public class TelevisionService {
         televisionDto.ambiLight = television.getAmbiLight();
         televisionDto.originalStock = television.getOriginalStock();
         televisionDto.sold = television.getSold();
+        televisionDto.remoteController = television.getRemoteController();
+        televisionDto.ciModule = television.getCiModule();
         return televisionDto;
     }
 
@@ -87,6 +121,8 @@ public class TelevisionService {
         television.setAmbiLight(televisionDto.ambiLight);
         television.setOriginalStock(televisionDto.originalStock);
         television.setSold(televisionDto.sold);
+        television.setRemoteController(televisionDto.remoteController);
+        television.setCiModule(televisionDto.ciModule);
         return television;
     }
 }

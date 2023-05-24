@@ -1,8 +1,10 @@
 package nl.novi.backendspringtechiteasy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class RemoteController {
@@ -15,6 +17,10 @@ public class RemoteController {
     private String brand;
     private Double price;
     private Integer originalStock;
+
+    @OneToOne(mappedBy = "remoteController")
+    @JsonIgnore
+    Television television;
 
     public RemoteController() {
     }
@@ -83,5 +89,13 @@ public class RemoteController {
 
     public void setOriginalStock(Integer originalStock) {
         this.originalStock = originalStock;
+    }
+
+    public Television getTelevision() {
+        return television;
+    }
+
+    public void setTelevision(Television television) {
+        this.television = television;
     }
 }
