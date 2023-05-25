@@ -58,4 +58,12 @@ public class WallBracket {
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    public List<Television> getTelevisions() {
+        return televisions;
+    }
+
+    public void setTelevisions(List<Television> televisions) {
+        this.televisions = televisions;
+    }
 }

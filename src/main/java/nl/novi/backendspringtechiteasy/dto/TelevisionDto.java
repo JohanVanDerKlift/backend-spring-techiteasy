@@ -28,7 +28,7 @@ public class TelevisionDto {
     public Integer sold;
     public RemoteController remoteController;
     public CIModule ciModule;
-//    public List<WallBracket> wallBrackets;
+    public List<WallBracketDto> wallBrackets;
 
     public static TelevisionDto fromTelevision(Television television) {
         TelevisionDto dto = new TelevisionDto();

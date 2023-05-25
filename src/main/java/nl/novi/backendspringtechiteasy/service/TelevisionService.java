@@ -1,9 +1,11 @@
 package nl.novi.backendspringtechiteasy.service;
 
 import nl.novi.backendspringtechiteasy.dto.TelevisionDto;
+import nl.novi.backendspringtechiteasy.dto.WallBracketDto;
 import nl.novi.backendspringtechiteasy.exception.RecordNotFoundException;
 import nl.novi.backendspringtechiteasy.model.RemoteController;
 import nl.novi.backendspringtechiteasy.model.Television;
+import nl.novi.backendspringtechiteasy.model.WallBracket;
 import nl.novi.backendspringtechiteasy.repository.RemoteControllerRepository;
 import nl.novi.backendspringtechiteasy.repository.TelevisionRepository;
 import org.springframework.stereotype.Service;
@@ -17,13 +19,15 @@ public class TelevisionService {
 
     private final TelevisionRepository televisionRepository;
     private final RemoteControllerRepository remoteControllerRepository;
+    private final WallBracketService wallBracketService;
 
-    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository) {
+    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, WallBracketService wallBracketService) {
         this.televisionRepository = televisionRepository;
         this.remoteControllerRepository = remoteControllerRepository;
+        this.wallBracketService = wallBracketService;
     }
 
-//    public TelevisionDto assignRemoteControllerToTelevision(Long id, Long remoteControllerId) throws RecordNotFoundException {
+    //    public TelevisionDto assignRemoteControllerToTelevision(Long id, Long remoteControllerId) throws RecordNotFoundException {
 //        Optional<Television> optionalTelevision= televisionRepository.findById(id);
 //        Optional<RemoteController> optionalRemoteController = remoteControllerRepository.findById(remoteControllerId);
 //        if (optionalTelevision.isPresent() && optionalRemoteController.isPresent()) {
@@ -102,6 +106,11 @@ public class TelevisionService {
         televisionDto.sold = television.getSold();
         televisionDto.remoteController = television.getRemoteController();
         televisionDto.ciModule = television.getCiModule();
+        List<WallBracketDto> wallBracketDtos = new ArrayList<>();
+        for (WallBracket wallBracket : television.getWallBrackets()) {
+            wallBracketDtos.add(wallBracketService.getWallBracket(wallBracket.getId()));
+        }
+        televisionDto.wallBrackets = wallBracketDtos;
         return televisionDto;
     }
 

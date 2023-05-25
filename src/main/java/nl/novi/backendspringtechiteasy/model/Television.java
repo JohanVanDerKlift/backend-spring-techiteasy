@@ -1,8 +1,11 @@
 package nl.novi.backendspringtechiteasy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
+
+// https://github.com/Klippie/backend-spring-techiteasy/pull/4
 
 @Entity
 @Table(name = "televisions")
@@ -33,6 +36,7 @@ public class Television {
     private CIModule ciModule;
 
     @ManyToMany
+    @JsonIgnore
     private List<WallBracket> wallBrackets;
 
     public Television() {
@@ -201,5 +205,13 @@ public class Television {
 
     public void setCiModule(CIModule ciModule) {
         this.ciModule = ciModule;
+    }
+
+    public List<WallBracket> getWallBrackets() {
+        return wallBrackets;
+    }
+
+    public void setWallBrackets(List<WallBracket> wallBrackets) {
+        this.wallBrackets = wallBrackets;
     }
 }
