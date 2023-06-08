@@ -3,7 +3,6 @@ package nl.novi.backendspringtechiteasy.dto;
 import nl.novi.backendspringtechiteasy.model.CIModule;
 import nl.novi.backendspringtechiteasy.model.RemoteController;
 import nl.novi.backendspringtechiteasy.model.Television;
-import nl.novi.backendspringtechiteasy.model.WallBracket;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;

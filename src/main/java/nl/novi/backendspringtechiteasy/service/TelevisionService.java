@@ -46,12 +46,13 @@ public class TelevisionService {
         Optional<RemoteController> optionalRemoteController = remoteControllerRepository.findById(remoteControllerId);
         if (optionalTelevision.isEmpty() && optionalRemoteController.isEmpty()) {
             throw new RecordNotFoundException("Records not found");
+        } else {
+            Television television = optionalTelevision.get();
+            RemoteController remoteController = optionalRemoteController.get();
+            television.setRemoteController(remoteController);
+            televisionRepository.save(television);
+            return transferTelevisionToTelevisionDto(television);
         }
-        Television television = optionalTelevision.get();
-        RemoteController remoteController = optionalRemoteController.get();
-        television.setRemoteController(remoteController);
-        televisionRepository.save(television);
-        return transferTelevisionToTelevisionDto(television);
     }
 
     public List<TelevisionDto> getTelevisions() {

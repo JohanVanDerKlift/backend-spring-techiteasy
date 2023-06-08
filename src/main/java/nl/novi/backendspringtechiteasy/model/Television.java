@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-// https://github.com/Klippie/backend-spring-techiteasy/pull/4
-
 @Entity
 @Table(name = "televisions")
 public class Television {
@@ -32,6 +30,7 @@ public class Television {
 
     @OneToOne(cascade = CascadeType.ALL)
     RemoteController remoteController;
+
     @ManyToOne
     private CIModule ciModule;
 
