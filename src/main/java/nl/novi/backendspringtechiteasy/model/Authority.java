@@ -1,17 +1,18 @@
 package nl.novi.backendspringtechiteasy.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.io.Serializable;
 
 @Entity
 @IdClass(AuthorityKey.class)
 @Table(name = "authorities")
-public class Authority {
+public class Authority implements Serializable {
     @Id
+    @Column(nullable = false)
     private String username;
     @Id
+    @Column(nullable = false)
     private String authority;
 
     public Authority() {

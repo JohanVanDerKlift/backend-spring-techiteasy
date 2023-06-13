@@ -20,3 +20,17 @@ VALUES ('1', '1'),
        ('1', '2'),
        ('2', '2');
 
+INSERT INTO users (username, password, api_key, enabled, email)
+VALUES ('Johan', 'password', 'apiapiapiapi', 'true', 'info@johanvanderKlift.nl');
+
+INSERT INTO users (username, password, api_key, enabled, email)
+VALUES ('Yara', 'password', 'apiapiapiapi', 'true', 'Yara@yara.nl');
+
+INSERT INTO authorities (authority, username)
+VALUES ('ROLE_USER', 'Johan');
+
+INSERT INTO authorities (authority, username)
+VALUES ('ROLE_ADMIN', 'Johan');
+
+INSERT INTO authorities (authority, username)
+VALUES ('ROLE_USER', 'Yara');

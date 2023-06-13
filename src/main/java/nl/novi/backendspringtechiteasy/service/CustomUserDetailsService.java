@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class CustomerDetailService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserService userService;
 
-    public CustomerDetailService(UserService userService) {
+    public CustomUserDetailsService(UserService userService) {
         this.userService = userService;
     }
 

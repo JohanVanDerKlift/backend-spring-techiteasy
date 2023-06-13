@@ -1,21 +1,31 @@
 package nl.novi.backendspringtechiteasy.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
+    @Column(nullable = false, unique = true)
     private String username;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    private boolean enabled = true;
+    @Column
     private String ApiKey;
+    @Column
+    private String email;
 
-    @OneToMany(mappedBy = "username", fetch = FetchType.EAGER)
+    @OneToMany(
+            targetEntity = Authority.class,
+            mappedBy = "username",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.EAGER)
     private Set<Authority> authorities = new HashSet<>();
 
     public String getUsername() {
@@ -34,12 +44,28 @@ public class User {
         this.password = password;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public String getApiKey() {
         return ApiKey;
     }
 
     public void setApiKey(String apiKey) {
         ApiKey = apiKey;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Set<Authority> getAuthorities() {

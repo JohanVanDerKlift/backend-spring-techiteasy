@@ -5,6 +5,7 @@ import nl.novi.backendspringtechiteasy.model.Authority;
 import nl.novi.backendspringtechiteasy.model.User;
 import nl.novi.backendspringtechiteasy.repository.UserRepository;
 import nl.novi.backendspringtechiteasy.utils.RandomStringGenerator;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,9 +15,11 @@ import java.util.Set;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder encoder) {
         this.userRepository = userRepository;
+        this.encoder = encoder;
     }
 
     public List<UserDto> getAllUsers() {
@@ -34,9 +37,12 @@ public class UserService {
         return transferUserToDto(user);
     }
 
+    public boolean userExists(String username) {
+        return userRepository.existsById(username);
+    }
+
     public String createUser(UserDto dto) {
-        String randomString = RandomStringGenerator.generateAlphaNumeric(20);
-        dto.ApiKey = randomString;
+        dto.ApiKey = RandomStringGenerator.generateAlphaNumeric(20);
         User user = new User();
         User newUser = userRepository.save(transferDtoToUser(dto, user));
         return newUser.getUsername();
@@ -75,12 +81,18 @@ public class UserService {
         UserDto dto = new UserDto();
         dto.username = user.getUsername();
         dto.password = user.getPassword();
+        dto.enabled = user.isEnabled();
+        dto.ApiKey = user.getApiKey();
+        dto.email = user.getEmail();
         return dto;
     }
 
     private User transferDtoToUser(UserDto dto, User user) {
         user.setUsername(dto.username);
-        user.setPassword(dto.password);
+        user.setPassword(encoder.encode(dto.password));
+        user.setEnabled(dto.enabled);
+        user.setApiKey(dto.ApiKey);
+        user.setEmail(dto.email);
         return user;
     }
 }
